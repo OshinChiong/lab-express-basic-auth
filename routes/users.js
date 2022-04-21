@@ -4,6 +4,7 @@ const User = require("../models/User.model");
 const bcrypt = require("bcryptjs");
 const res = require("express/lib/response");
 const saltRounds = 10;
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/signup", function (req, res, next) {
     res.render("signup");
@@ -86,7 +87,7 @@ router.get("/logout", (req, res) => {
 
 //itiration 3
 //GET secret
-router.get("/secret",  (req, res, next) => {
+router.get("/secret", isLoggedIn,  (req, res, next) => {
     //1.Check to see if you are logged in
     res.render("secret");
   });
