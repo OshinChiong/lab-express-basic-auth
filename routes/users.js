@@ -6,7 +6,7 @@ const res = require("express/lib/response");
 const saltRounds = 10;
 
 router.get("/signup", function (req, res, next) {
-    res.render("create-user");
+    res.render("signup");
   });
 router.get("/login", function (req, res, next){
 res.render("login");
@@ -15,14 +15,14 @@ res.render("login");
 router.post("/signup", function (req, res, next) {
     console.log("hit", req.body);
     if (!req.body.username || !req.body.password) {
-        res.render("create-user", { message: "Username and password requiered"})
+        res.render("signup", { message: "Username and password requiered"})
     }
 
 User.findOne({ username: req.body.username })
 .then((foundUser) => {
     console.log("Found user", foundUser);
     if (foundUser) {
-        res.render("create-user", { message: "username is taken"})
+        res.render("signup", { message: "username is taken"})
     } else {
     const salt = bcrypt.genSaltSync(saltRounds);
     console.log("SALT", salt);
@@ -83,5 +83,20 @@ router.get("/logout", (req, res) => {
     req.session.destroy();
     res.json("You have logout");
 });
+
+//itiration 3
+//GET secret
+router.get("/secret",  (req, res, next) => {
+    //1.Check to see if you are logged in
+    res.render("secret");
+  });
+  
+  
+  //GET logout
+  router.get("/logout", (req, res, next) => {
+    req.session.destroy();
+    res.render("index", { info: "You have logged out" });
+  });
+
 
 module.exports = router;

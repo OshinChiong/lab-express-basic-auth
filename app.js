@@ -15,6 +15,7 @@ const mongoose = require("mongoose");
 const hbs = require('hbs');
 
 const app = express();
+
 require("./config/session.config")(app);
 
 // ℹ️ This function is getting exported from the config folder. It runs most middlewares
